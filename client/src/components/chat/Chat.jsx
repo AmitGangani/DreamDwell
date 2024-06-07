@@ -3,7 +3,7 @@ import { useState } from "react";
 function Chat() {
    const [chat, setChat] = useState(true);
    return (
-      <div className="flex flex-col h-[calc(100vh)]">
+      <div className="flex flex-col h-[calc(100vh-100px)]">
          <div className="flex-1 flex flex-col gap-[20px] overflow-y-scroll">
             <h1 className="font-[300]">Messages</h1>
             <div className="bg-white p-5 rounded-[10px] flex items-center gap-5 cursor-pointer ">

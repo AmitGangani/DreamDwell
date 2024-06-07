@@ -3,14 +3,14 @@ import List from "../../components/list/List";
 
 function ProfilePage() {
    return (
-      <div className="flex h-full flex-col md:flex-row overflow-scroll">
-         <div className=" flex-none md:flex-[2] bg-[#fcf5f3] h-max md:h-full ">
-            <div className=" py-0 px-[20px] h-full ">
+      <div className="flex h-[calc(100vh-100px)] flex-col md:flex-row overflow-y-scroll">
+         <div className=" flex-none md:flex-[2] bg-[#fcf5f3] h-max md:h-[calc(100vh-100px)] ">
+            <div className=" py-0 px-[20px] md:h-[calc(100vh-100px)] ">
                <Chat />
             </div>
          </div>
-         <div className="flex-none md:flex-[3] h-max overflow-y-scroll  pb-[50px]">
-            <div className="pl-[50px] flex flex-col gap-[50px]">
+         <div className="flex-none md:flex-[3] h-[calc(100vh-100px)] overflow-y-scroll  pb-[50px]">
+            <div className="pl-[50px] flex flex-col gap-[50px] md:h-[calc(100vh-100px)]">
                <div className="flex justify-between items-center">
                   <h1 className="font-[300]">User Information</h1>
                   <button className="py-3 px-6 bg-[#fece51] cursor-pointer border-none">

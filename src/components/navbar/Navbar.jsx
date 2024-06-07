@@ -7,6 +7,8 @@ import {
    DropdownMenuItem,
    DropdownMenuTrigger,
 } from "./../ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Menu } from "lucide-react";
 
 function Navbar() {
    const user = true;
@@ -36,21 +38,16 @@ function Navbar() {
          </div>
          <div className="flex-[2] flex items-center justify-end h-full">
             {user ? (
-               <div className="flex items-center font-bold">
-                  <img
-                     src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                     alt=""
-                     className="w-10 h-10 rounded-full object-cover mr-5"
-                  />
-                  <span className="hidden sm:inline">John Doe</span>
-                  <Link
-                     to="/profile"
-                     className="py-3 px-6 bg-yellow-400 cursor-pointer border-none relative"
-                  >
+               <div className="flex items-center font-bold gap-4">
+                  <Avatar>
+                     <AvatarImage src="https://github.com/shadcn.png" />
+                     <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <Link to="/profile" className="relative hidden sm:block">
                      <div className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center">
                         3
                      </div>
-                     <span>Profile</span>
+                     <Button className="bg-yellow-400 ">Profile</Button>
                   </Link>
                </div>
             ) : (
@@ -67,17 +64,11 @@ function Navbar() {
                   </Button>
                </>
             )}
-            {/* <div className="sm:hidden z-[999]">
-               <img
-                  src="/menu.png"
-                  alt=""
-                  className="w-9 h-9 cursor-pointer shrink-0"
-                  onClick={() => setOpen((prev) => !prev)}
-               />
-            </div> */}
             <DropdownMenu>
                <DropdownMenuTrigger className="sm:hidden">
-                  <Button>O</Button>
+                  <Button className="rounded-full p-2">
+                     <Menu />
+                  </Button>
                </DropdownMenuTrigger>
                <DropdownMenuContent>
                   <DropdownMenuItem>

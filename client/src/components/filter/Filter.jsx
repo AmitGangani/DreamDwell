@@ -10,12 +10,35 @@ import {
    SelectTrigger,
    SelectValue,
 } from "../ui/select";
+import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
 
 function Filter() {
+   const [searchParams, setSearchParams] = useSearchParams();
+   const [query, setQuery] = useState({
+      type: searchParams.get("type") || "",
+      city: searchParams.get("city") || "",
+      property: searchParams.get("property") || "",
+      minPrice: searchParams.get("minPrice") || "",
+      maxPrice: searchParams.get("maxPrice") || "",
+      bedroom: searchParams.get("bedroom") || "",
+   });
+
+   const handleChange = (e) => {
+      setQuery({
+         ...query,
+         [e.target.name]: e.target.value,
+      });
+   };
+
+   const handleFilter = () => {
+      setSearchParams(query);
+   };
+
    return (
       <div className="flex flex-col gap-[10px]">
          <h1 className="font-[300] text-[24px]">
-            Search results for <b>London</b>
+            Search results for <b>{searchParams.get("city")}</b>
          </h1>
          <div className="top">
             <div className="">
@@ -26,6 +49,7 @@ function Filter() {
                   name="city"
                   placeholder="City Location"
                   className="w-[95%] mx-auto"
+                  defaultValue={query.city}
                />
             </div>
          </div>
@@ -34,7 +58,13 @@ function Filter() {
                <Select>
                   <Label htmlFor="type">Type</Label>
                   <SelectTrigger className="">
-                     <SelectValue placeholder="Type" name="type" id="type" />
+                     <SelectValue
+                        placeholder="Type"
+                        name="type"
+                        id="type"
+                        onChange={handleChange}
+                        defaultValue={query.type}
+                     />
                   </SelectTrigger>
                   <SelectContent>
                      <SelectGroup>
@@ -53,6 +83,8 @@ function Filter() {
                         placeholder="Property"
                         name="property"
                         id="property"
+                        onChange={handleChange}
+                        defaultValue={query.property}
                      />
                   </SelectTrigger>
                   <SelectContent>
@@ -73,6 +105,8 @@ function Filter() {
                   id="minPrice"
                   name="minPrice"
                   placeholder="Min Price"
+                  onChange={handleChange}
+                  defaultValue={query.minPrice}
                />
             </div>
             <div className="item">
@@ -82,6 +116,8 @@ function Filter() {
                   id="maxPrice"
                   name="maxPrice"
                   placeholder="Max Price"
+                  onChange={handleChange}
+                  defaultValue={query.maxPrice}
                />
             </div>
             <div className="item">
@@ -91,9 +127,11 @@ function Filter() {
                   id="bedroom"
                   name="bedroom"
                   placeholder="any"
+                  onChange={handleChange}
+                  defaultValue={query.bedroom}
                />
             </div>
-            <Button>
+            <Button onClick={handleFilter}>
                <img src="/search.png" alt="" />
             </Button>
          </div>

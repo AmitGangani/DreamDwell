@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Button } from "./../ui/button";
 
 import {
@@ -9,10 +9,20 @@ import {
 } from "./../ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Menu } from "lucide-react";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
+import { useNotificationStore } from "@/lib/notificationStore";
 
 function Navbar() {
-   const user = true;
+   const [open, setOpen] = useState(false);
 
+   const { currentUser } = useContext(AuthContext);
+
+   const fetch = useNotificationStore((state) => state.fetch);
+   const number = useNotificationStore((state) => state.number);
+
+   if (currentUser) fetch();
+   const navigate = useNavigate();
    return (
       <nav className="h-[100px] flex justify-between items-center">
          <div className="flex-[3] flex items-center gap-[50px]">
@@ -37,16 +47,18 @@ function Navbar() {
             </a>
          </div>
          <div className="flex-[2] flex items-center justify-end h-full">
-            {user ? (
+            {currentUser ? (
                <div className="flex items-center font-bold gap-4">
                   <Avatar>
-                     <AvatarImage src="https://github.com/shadcn.png" />
-                     <AvatarFallback>CN</AvatarFallback>
+                     <AvatarImage src={currentUser.avatar || "/noavatar.jpg"} />
+                     <AvatarFallback>{currentUser.username}</AvatarFallback>
                   </Avatar>
                   <Link to="/profile" className="relative hidden sm:block">
-                     <div className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center">
-                        3
-                     </div>
+                     {number > 0 && (
+                        <div className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center">
+                           {number}
+                        </div>
+                     )}
                      <Button className="bg-yellow-400 ">Profile</Button>
                   </Link>
                </div>
@@ -55,11 +67,19 @@ function Navbar() {
                   <Button
                      variant="secondary"
                      className="transition hidden sm:inline-block hover:scale-105 m-1"
+                     onClick={() => {
+                        navigate("/login");
+                     }}
                   >
                      Sign in
                   </Button>
 
-                  <Button className="transition hidden sm:inline-block hover:scale-105 m-1">
+                  <Button
+                     className="transition hidden sm:inline-block hover:scale-105 m-1"
+                     onClick={() => {
+                        navigate("/register");
+                     }}
+                  >
                      Sign up
                   </Button>
                </>

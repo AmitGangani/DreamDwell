@@ -8,7 +8,7 @@ function Card({ item }) {
             className="flex-[2] h-[200px] hidden md:block"
          >
             <img
-               src={item.img}
+               src={item.images[0]}
                alt=""
                className="w-full h-full object-cover rounded-[10px]"
             />
